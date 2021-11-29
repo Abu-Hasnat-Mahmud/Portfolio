@@ -729,7 +729,7 @@
 
 
         <!-- ----------------- Contact Me ------------------ -->
-        <section class="contact section" id="contact">
+        <section class="contact section" id="contactme">
 
             <h2 class="section__title">Contact Me</h2>
             <span class="section__subtitle">Get in touch</span>
@@ -765,28 +765,27 @@
                 </div>
 
                 <form action="" class="contact__form grid">
-                    <div class="contact__inputs grid">
+                    <!-- <div class="contact__inputs grid"> -->
                         <div class="contact__content">
                             <label for="" class="contact__label">Name</label>
-                            <input type="text" class="contact__input">
-                            
+                            <input type="text" id="contact_name" class="contact__input">
                         </div>
                         <div class="contact__content">
                             <label for="" class="contact__label">Email</label>
-                            <input type="email" class="contact__input">
+                            <input type="email" id="contact_email" class="contact__input">
                         </div>
-                    </div>
-                    <div class="contact__content">
+                    <!-- </div> -->
+                    <!-- <div class="contact__content">
                         <label for="" class="contact__label">Project</label>
                         <input type="text" class="contact__input">
-                    </div>
+                    </div> -->
                     <div class="contact__content">
                         <label for="" class="contact__label">Message</label>
-                        <textarea name="" id="" cols="0" rows="7" class="contact__input"></textarea>
+                        <textarea name="" id="contact_message" cols="0" rows="7" class="contact__input"></textarea>
                     </div>
 
                     <div>
-                        <a href="#" class="button button--flex">
+                        <a href="#" id="btn_message_submit" class="button button--flex">
                             Send Message
                             <i class="uil uil-message button__icon"></i>
                         </a>
@@ -843,5 +842,52 @@
     <script src="./assets/js/swiper-bundle.min.js"></script>
     <!-- ------------ Main Js ------------ -->
     <script src="./assets/js/main.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+        emailjs.init("user_5g3cSubuTbY64EwlKsc7G");
+        })();
+    </script>
+
+    <script>
+        function sendMessage(){
+            let name=document.querySelector("#contact_name");
+            let email=document.querySelector("#contact_email");
+            let message=document.querySelector("#contact_message");
+            let btnSubmit=document.querySelector("#btn_message_submit");
+
+            btnSubmit.addEventListener('click',(e)=>{
+                e.preventDefault();
+               
+                if (name.value !== "" && email.value !== "" && message.value !== "") {
+
+                    const serviceID = 'service_5gu5awc';
+                    const templateID = 'template_h4egjiy';
+
+                    emailjs.send(serviceID, templateID, {
+                        to_name: name.value,
+                        from_name: email.value,
+                        message: message.value,
+                    })
+                    .then(function(response) {
+                        alert("Message sent");
+                        name.value = "";
+                        email.value = "";
+                        message.value= "";
+                    }, function(error) {
+                        alert("Message not sent");                   
+                    });
+
+                   
+                }
+                
+                
+
+            })
+        }
+
+        sendMessage();
+    </script>
 </body>
 </html>
